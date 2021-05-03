@@ -128,6 +128,16 @@ button.btn-green {
   color: white;
 }
 
+button.btn-google {
+  background-color: white;
+  color: var(--color-text);
+}
+
+.btn-google img {
+  width: 30px;
+  margin-right: 10px;
+}
+
 /* Navbar */
 
 .navbar {
