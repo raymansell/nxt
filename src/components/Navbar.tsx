@@ -1,8 +1,8 @@
 import Link from 'next/link';
+import { useUserData } from '../context/UserContext';
 
 const Navbar = () => {
-  const user = { photoURL: '' };
-  const username = null;
+  const { user, username } = useUserData();
 
   return (
     <nav className='navbar'>

@@ -199,3 +199,13 @@ button.btn-google {
 .push-left {
   margin-left: auto;
 }
+
+.text-danger {
+  font-weight: bold;
+  color: var(--color-red);
+}
+
+.text-success {
+  font-weight: bold;
+  color: var(--color-green);
+}

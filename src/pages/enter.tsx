@@ -1,4 +1,6 @@
 import { auth, googleAuthProvider } from '../lib/firebase';
+import { useUserData } from '../context/UserContext';
+import UsernameForm from '../components/UsernameForm';
 
 // Sign in with Google button
 const SignInButton = () => {
@@ -15,16 +17,11 @@ const SignInButton = () => {
 
 // Sign out button
 const SignOutButton = () => {
-  return <button onClick={() => auth.signOut}>Sign out</button>;
-};
-
-const UsernameForm = () => {
-  return null;
+  return <button onClick={() => auth.signOut()}>Sign out</button>;
 };
 
 const EnterPage = () => {
-  const user = null;
-  const username = null;
+  const { user, username } = useUserData();
 
   // 1. user signed out · <SignInButton />
   // 2. user signed in, but missing username · <UsernameForm />
