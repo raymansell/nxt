@@ -9,8 +9,8 @@ const UserProfile = ({ user }: UserProfileProps) => {
     return <div>that user does not exist</div>;
   }
   return (
-    <div>
-      <img src={user.photoURL} alt='user profile' />
+    <div className='box-center'>
+      <img src={user.photoURL} alt='user profile' className='card-img-center' />
       <p>
         <i>@{user.username}</i>
       </p>
