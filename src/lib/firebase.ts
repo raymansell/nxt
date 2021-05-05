@@ -16,10 +16,15 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-
+// Auth exports
 export const auth = firebase.auth();
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
+// Firestore exports
 export const firestore = firebase.firestore();
+export const { fromMillis } = firebase.firestore.Timestamp;
+
+// Storage exports
 export const storage = firebase.storage();
 
 // Helper functions
@@ -53,7 +58,6 @@ export const getUserWithUsername = async (username: string) => {
   Converts a Firestore Post document to JSON
   @param {DocumentSnapshot} doc
 */
-
 export const postToJSON = (
   doc: firebase.firestore.QueryDocumentSnapshot<Post>
 ): Post => {
