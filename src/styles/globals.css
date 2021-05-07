@@ -227,6 +227,10 @@ button.btn-google {
   margin-left: auto;
 }
 
+.text-sm {
+  font-size: 0.85rem;
+}
+
 .text-danger {
   font-weight: bold;
   color: var(--color-red);
@@ -235,6 +239,11 @@ button.btn-google {
 .text-success {
   font-weight: bold;
   color: var(--color-green);
+}
+
+.text-info {
+  font-weight: bold;
+  color: var(--color-blue);
 }
 
 .box-center {

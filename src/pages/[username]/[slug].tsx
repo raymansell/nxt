@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
 import {
   firestore,
   getUserWithUsername,
@@ -7,6 +8,8 @@ import {
   postToJSON,
 } from '../../lib/firebase';
 import { Post } from '../../types';
+import styles from '../../styles/Post.module.css';
+import PostContent from '../../components/PostContent';
 
 interface IParams extends ParsedUrlQuery {
   username: string;
@@ -37,6 +40,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const userDoc = await getUserWithUsername(username);
 
   let post: Post | null = null;
+  let path = '/';
 
   if (userDoc) {
     const postRef = userDoc.ref
@@ -47,11 +51,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     if (postDoc.exists) {
       post = postToJSON(postDoc);
+      path = postRef.path;
     }
   }
 
   return {
-    props: { post },
+    props: { post, path },
     // (https://reactions-demo.vercel.app/)
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
@@ -64,20 +69,38 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 interface PostPageProps {
   post: Post | null;
+  path: string;
 }
 
-const PostPage = ({ post }: PostPageProps) => {
+const PostPage = ({ post, path }: PostPageProps) => {
+  const postRef = firestore.doc(path);
+  const [realTimePost] = useDocumentData<Post>(postRef, {
+    // https://github.com/CSFrequency/react-firebase-hooks/blob/master/firestore/README.md#transforming-data
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    transform: (val: any) => {
+      return {
+        ...val,
+        createdAt: val.createdAt.toMillis(),
+        updatedAt: val.updatedAt.toMillis(),
+      };
+    },
+  });
+
+  const postToShow = realTimePost || post;
+
   return (
-    <main>
+    <main className={styles.container}>
+      <section>
+        <PostContent post={postToShow} />
+      </section>
+
       {post ? (
-        <>
-          <h1>{post.title}</h1>
-          <p>{post.content}</p>
-          <p>{post.heartCount} hearts</p>
-        </>
-      ) : (
-        <h1>post doesn&apos;t exist</h1>
-      )}
+        <aside className='card'>
+          <p>
+            <strong>{post.heartCount} 🤍</strong>
+          </p>
+        </aside>
+      ) : null}
     </main>
   );
 };
