@@ -10,6 +10,7 @@ import {
 import { Post } from '../../types';
 import styles from '../../styles/Post.module.css';
 import PostContent from '../../components/PostContent';
+import Metatags from '../../components/Metatags';
 
 interface IParams extends ParsedUrlQuery {
   username: string;
@@ -90,6 +91,10 @@ const PostPage = ({ post, path }: PostPageProps) => {
 
   return (
     <main className={styles.container}>
+      <Metatags
+        title={post?.title || "Oops, post doesn't exist"}
+        description={post?.title || "Oops, post doesn't exist"}
+      />
       <section>
         <PostContent post={postToShow} />
       </section>

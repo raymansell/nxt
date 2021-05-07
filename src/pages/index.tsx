@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Post } from '../types';
 import { firestore, converter, postToJSON, fromMillis } from '../lib/firebase';
 import Loader from '../components/Loader';
-import styles from '../styles/Home.module.css';
 import PostFeed from '../components/PostFeed';
+import Metatags from '../components/Metatags';
 
 // Max posts to query per page
 const LIMIT = 1;
@@ -61,6 +61,10 @@ export default function Home(props: HomeProps) {
 
   return (
     <main>
+      <Metatags
+        title='Home Page'
+        description='Get the latest posts on our site'
+      />
       <div className='card card-info'>
         <h2>💡 Next.js + Firebase blogging platform.</h2>
         <p>

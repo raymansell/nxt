@@ -4,6 +4,7 @@ import { converter, getUserWithUsername, postToJSON } from '../../lib/firebase';
 import PostFeed from '../../components/PostFeed';
 import UserProfile from '../../components/UserProfile';
 import { User, Post } from '../../types';
+import Metatags from '../../components/Metatags';
 
 interface IParams extends ParsedUrlQuery {
   username: string;
@@ -45,6 +46,11 @@ interface UserProfilePageProps {
 const UserProfilePage = ({ user, posts }: UserProfilePageProps) => {
   return (
     <main>
+      <Metatags
+        title={user.username}
+        description={`${user.username}'s public profile`}
+        image={user.photoURL}
+      />
       <UserProfile user={user} />
       <PostFeed posts={posts} />
     </main>

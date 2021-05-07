@@ -1,6 +1,7 @@
 import { auth, googleAuthProvider } from '../lib/firebase';
 import { useUserData } from '../context/UserContext';
 import UsernameForm from '../components/UsernameForm';
+import Metatags from '../components/Metatags';
 
 // Sign in with Google button
 const SignInButton = () => {
@@ -28,6 +29,7 @@ const EnterPage = () => {
   // 3. user signed in, has username · <SignOutButton />
   return (
     <main>
+      <Metatags title='Enter' description='Sign up for this amazing app!' />
       {/* eslint-disable-next-line no-nested-ternary */}
       {user ? (
         !username ? (
