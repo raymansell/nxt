@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -59,9 +60,11 @@ export const getUserWithUsername = async (username: string) => {
   @param {DocumentSnapshot} doc
 */
 export const postToJSON = (
-  doc: firebase.firestore.QueryDocumentSnapshot<Post>
+  doc:
+    | firebase.firestore.QueryDocumentSnapshot<Post>
+    | firebase.firestore.DocumentSnapshot<Post>
 ): Post => {
-  const data = doc.data();
+  const data = doc.data()!; // asserting non-null data of the DocumentSnapshot
   return {
     ...data,
     // Firestore timestamp are NOT serializable to JSON. Must convert to milliseconds.
