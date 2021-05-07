@@ -13,20 +13,25 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { username } = params as IParams;
   const userDoc = await getUserWithUsername(username);
 
-  // JSON serializable data
-  let user: User | null = null;
-  let posts: Post[] | null = null;
-
-  if (userDoc) {
-    user = userDoc.data();
-    const postsQuery = userDoc.ref
-      .collection('posts')
-      .withConverter(converter<Post>())
-      .where('published', '==', true)
-      .orderBy('createdAt', 'desc')
-      .limit(5);
-    posts = (await postsQuery.get()).docs.map(postToJSON);
+  // If no user, short circut to 404 page
+  if (!userDoc) {
+    return {
+      notFound: true,
+    };
   }
+
+  // JSON serializable data
+  const user = userDoc.data();
+  let posts: Post[] = [];
+
+  const postsQuery = userDoc.ref
+    .collection('posts')
+    .withConverter(converter<Post>())
+    .where('published', '==', true)
+    .orderBy('createdAt', 'desc')
+    .limit(5);
+  posts = (await postsQuery.get()).docs.map(postToJSON);
+
   return {
     props: { user, posts },
   };

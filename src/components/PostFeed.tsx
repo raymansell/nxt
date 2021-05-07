@@ -33,11 +33,11 @@ const PostItem = ({ post }: PostItemProps) => {
 };
 
 interface PostFeedProps {
-  posts: Post[] | null;
+  posts: Post[];
 }
 
 const PostFeed = ({ posts }: PostFeedProps) => {
-  return posts ? (
+  return posts.length > 0 ? (
     <>
       {posts.map((post) => (
         <PostItem key={post.slug} post={post} />
