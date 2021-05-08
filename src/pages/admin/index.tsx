@@ -1,7 +1,11 @@
+import AuthCheck from '../../components/AuthCheck';
+
 const AdminPostsPage = () => {
   return (
     <main>
-      <h1>My posts</h1>
+      <AuthCheck>
+        <h1>My posts</h1>
+      </AuthCheck>
     </main>
   );
 };
