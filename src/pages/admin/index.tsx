@@ -47,6 +47,7 @@ const CreateNewPost = () => {
     const data = {
       title,
       slug,
+      uid,
       username,
       published: false,
       content: '# hello world',

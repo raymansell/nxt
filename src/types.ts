@@ -6,6 +6,7 @@ export interface User {
 }
 
 export interface Post {
+  uid: string;
   content: string;
   createdAt: number;
   heartCount: number;
