@@ -2,11 +2,13 @@ import { useRouter } from 'next/dist/client/router';
 import React, { useState } from 'react';
 import kebabCase from 'lodash.kebabcase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import toast from 'react-hot-toast';
 import AuthCheck from '../../components/AuthCheck';
 import PostFeed from '../../components/PostFeed';
 import { useUserData } from '../../context/UserContext';
 import { auth, firestore, serverTimestamp } from '../../lib/firebase';
 import { Post } from '../../types';
+import styles from '../../styles/Admin.module.css';
 
 const PostList = () => {
   const ref = firestore
@@ -59,6 +61,8 @@ const CreateNewPost = () => {
     // Commiting document to Firestore
     await ref.set(data);
 
+    toast.success('Post created!');
+
     // Imperative navigation after doc is set
     router.push(`/admin/${slug}`);
   };
@@ -66,6 +70,7 @@ const CreateNewPost = () => {
   return (
     <form onSubmit={createPost}>
       <input
+        className={styles.input}
         type='text'
         placeholder='My Awesome Article!'
         value={title}
