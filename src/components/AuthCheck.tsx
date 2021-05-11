@@ -3,15 +3,16 @@ import { useUserData } from '../context/UserContext';
 
 interface AuthCheckProps {
   children: React.ReactNode;
+  fallback: React.ReactNode;
 }
 
 // Component's children only shown to logged-in users
-const AuthCheck = ({ children }: AuthCheckProps) => {
+const AuthCheck = ({ children, fallback }: AuthCheckProps) => {
   const { username } = useUserData();
   return username ? (
     <>{children}</>
   ) : (
-    <Link href='/enter'>You must be signed in</Link>
+    <>{fallback}</> || <Link href='/enter'>You must be signed in</Link>
   );
 };
 

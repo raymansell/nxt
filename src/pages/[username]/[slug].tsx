@@ -13,6 +13,8 @@ import styles from '../../styles/Post.module.css';
 import PostContent from '../../components/PostContent';
 import Metatags from '../../components/Metatags';
 import { useUserData } from '../../context/UserContext';
+import AuthCheck from '../../components/AuthCheck';
+import HeartButton from '../../components/HeartButton';
 
 interface IParams extends ParsedUrlQuery {
   username: string;
@@ -107,6 +109,16 @@ const PostPage = ({ post, path }: PostPageProps) => {
           <p>
             <strong>{postToShow.heartCount} 🤍</strong>
           </p>
+
+          <AuthCheck
+            fallback={
+              <Link href='/enter'>
+                <button>💗 Sign Up</button>
+              </Link>
+            }
+          >
+            <HeartButton postRef={postRef} />
+          </AuthCheck>
 
           {currentUser?.uid === postToShow.uid && (
             <Link href={`/admin/${postToShow.slug}`}>
