@@ -28,6 +28,7 @@ export const { serverTimestamp } = firebase.firestore.FieldValue;
 
 // Storage exports
 export const storage = firebase.storage();
+export const { STATE_CHANGED } = firebase.storage.TaskEvent;
 
 // Helper functions
 

@@ -12,6 +12,7 @@ import AuthCheck from '../../components/AuthCheck';
 import { auth, firestore, serverTimestamp } from '../../lib/firebase';
 import { Post } from '../../types';
 import styles from '../../styles/Admin.module.css';
+import ImageUploader from '../../components/ImageUploader';
 
 interface PostFormProps {
   postRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>;
@@ -47,6 +48,8 @@ const PostForm = ({ postRef, defaultValues, preview }: PostFormProps) => {
         </div>
       )}
       <div className={preview ? styles.hidden : styles.controls}>
+        <ImageUploader />
+
         <textarea
           {...register('content', {
             required: { value: true, message: 'Content is required' },

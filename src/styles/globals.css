@@ -221,6 +221,20 @@ button.btn-google {
   }
 }
 
+/* File uploads */
+
+input[type='file'] {
+  display: none;
+}
+
+.upload-snippet {
+  width: 75%;
+  margin-left: auto;
+  background: white;
+  padding: 5px;
+  margin: 5px 0;
+}
+
 /* Utilities */
 
 .push-left {
@@ -246,9 +260,18 @@ button.btn-google {
   color: var(--color-blue);
 }
 
+.box {
+  display: flex;
+  justify-content: space-between;
+}
+
 .box-center {
   display: flex;
   flex-direction: column;
   align-content: center;
   text-align: center;
+}
+
+.hidden {
+  display: none;
 }
