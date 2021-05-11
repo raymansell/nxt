@@ -20,10 +20,12 @@ interface PostFormProps {
 }
 
 const PostForm = ({ postRef, defaultValues, preview }: PostFormProps) => {
-  const { register, handleSubmit, watch, reset } = useForm({
+  const { register, handleSubmit, watch, reset, formState } = useForm({
     defaultValues,
     mode: 'onChange',
   });
+
+  const { isValid, isDirty, errors } = formState;
 
   const updatePost: SubmitHandler<Post> = async ({ content, published }) => {
     await postRef.update({
@@ -45,7 +47,18 @@ const PostForm = ({ postRef, defaultValues, preview }: PostFormProps) => {
         </div>
       )}
       <div className={preview ? styles.hidden : styles.controls}>
-        <textarea {...register('content')} />
+        <textarea
+          {...register('content', {
+            required: { value: true, message: 'Content is required' },
+            maxLength: { value: 20000, message: 'Content is too long' },
+            minLength: { value: 10, message: 'Content is too short' },
+          })}
+        />
+
+        {errors.content && (
+          <p className='text-danger'>{errors.content.message}</p>
+        )}
+
         <fieldset>
           <label htmlFor='published'>
             <input
@@ -58,7 +71,11 @@ const PostForm = ({ postRef, defaultValues, preview }: PostFormProps) => {
           </label>
         </fieldset>
 
-        <button type='submit' className='btn-green'>
+        <button
+          type='submit'
+          className='btn-green'
+          disabled={!isDirty || !isValid}
+        >
           Save Changes
         </button>
       </div>
