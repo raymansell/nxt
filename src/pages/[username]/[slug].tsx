@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
+import Link from 'next/link';
 import {
   firestore,
   getUserWithUsername,
@@ -11,6 +12,7 @@ import { Post } from '../../types';
 import styles from '../../styles/Post.module.css';
 import PostContent from '../../components/PostContent';
 import Metatags from '../../components/Metatags';
+import { useUserData } from '../../context/UserContext';
 
 interface IParams extends ParsedUrlQuery {
   username: string;
@@ -88,6 +90,7 @@ const PostPage = ({ post, path }: PostPageProps) => {
   });
 
   const postToShow = realTimePost || post;
+  const { user: currentUser } = useUserData();
 
   return (
     <main className={styles.container}>
@@ -99,11 +102,17 @@ const PostPage = ({ post, path }: PostPageProps) => {
         <PostContent post={postToShow} />
       </section>
 
-      {post ? (
+      {postToShow ? (
         <aside className='card'>
           <p>
-            <strong>{post.heartCount} 🤍</strong>
+            <strong>{postToShow.heartCount} 🤍</strong>
           </p>
+
+          {currentUser?.uid === postToShow.uid && (
+            <Link href={`/admin/${postToShow.slug}`}>
+              <button className='btn-blue'>Edit</button>
+            </Link>
+          )}
         </aside>
       ) : null}
     </main>

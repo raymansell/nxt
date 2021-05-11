@@ -1,8 +1,17 @@
+import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import { useUserData } from '../context/UserContext';
+import { auth } from '../lib/firebase';
 
 const Navbar = () => {
   const { user, username } = useUserData();
+
+  const router = useRouter();
+
+  const signOut = () => {
+    auth.signOut();
+    router.reload();
+  };
 
   return (
     <nav className='navbar'>
@@ -16,7 +25,7 @@ const Navbar = () => {
         {username && (
           <>
             <li className='push-left'>
-              <button>Sign Out</button>
+              <button onClick={signOut}>Sign Out</button>
             </li>
             <li>
               <Link href='/admin'>
