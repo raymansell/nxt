@@ -7,7 +7,7 @@ import PostFeed from '../components/PostFeed';
 import Metatags from '../components/Metatags';
 
 // Max posts to query per page
-const LIMIT = 1;
+const LIMIT = 5;
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const postsQuery = firestore
